@@ -8,13 +8,17 @@ from huggingface_hub import hf_hub_download
 HF_USERNAME = "LeaMiles"
 MODEL_REPO = f"{HF_USERNAME}/tourism-wellness-model"
 
+# Optional: authenticating removes rate limits on downloads (harmless if unset, since
+# this model repo is public) -- set HF_TOKEN as a Space secret in Settings to enable it
+HF_TOKEN = os.environ.get("HF_TOKEN")
+
 st.set_page_config(page_title="Wellness Tourism Package Predictor", page_icon="\U0001F334", layout="wide")
 
 
 @st.cache_resource
 def load_model():
     # Cached so the model is only downloaded/deserialized once per app session, not on every click
-    model_path = hf_hub_download(repo_id=MODEL_REPO, repo_type="model", filename="model.joblib")
+    model_path = hf_hub_download(repo_id=MODEL_REPO, repo_type="model", filename="model.joblib", token=HF_TOKEN)
     return joblib.load(model_path)
 
 
@@ -24,7 +28,7 @@ model = load_model()
 @st.cache_resource
 def load_feature_importance():
     # Reuses the SAME CSV train.py uploaded next to the model, so the app never has to recompute anything
-    path = hf_hub_download(repo_id=MODEL_REPO, repo_type="model", filename="feature_importance.csv")
+    path = hf_hub_download(repo_id=MODEL_REPO, repo_type="model", filename="feature_importance.csv", token=HF_TOKEN)
     return pd.read_csv(path, index_col=0)
 
 

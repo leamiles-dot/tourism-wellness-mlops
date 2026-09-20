@@ -261,7 +261,11 @@ def main():
         # crash whenever XGBoost happens to be the selected model
         mlflow.sklearn.log_model(
             best_pipeline, "model",
-            skops_trusted_types=["xgboost.core.Booster", "xgboost.sklearn.XGBClassifier"],
+            skops_trusted_types=[
+                "xgboost.core.Booster",
+                "xgboost.sklearn.XGBClassifier",
+                "sklearn.compose._column_transformer._RemainderColsList",
+            ],
         )
 
     # 7. Save the SELECTED pipeline locally, then register it (plus ranking tables) on Hugging Face
