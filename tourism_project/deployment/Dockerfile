@@ -1,5 +1,5 @@
-# Use a minimal base image with Python 3.9 installed
-FROM python:3.9
+# Use Python 3.12 -- required because xgboost 3.4.1 has no Python 3.9-compatible build
+FROM python:3.12
 
 # Set the working directory inside the container to /app
 WORKDIR /app
