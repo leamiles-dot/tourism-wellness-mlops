@@ -265,6 +265,7 @@ def main():
                 "xgboost.core.Booster",
                 "xgboost.sklearn.XGBClassifier",
                 "sklearn.compose._column_transformer._RemainderColsList",
+                "sklearn.tree._tree.Tree",
             ],
         )
 
